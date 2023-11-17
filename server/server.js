@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
+import shoppingListRoutes from './routes/shoppingList.route.js';
 const app = express();
 const port = 3000;
 
@@ -19,6 +20,9 @@ mongoose.connect('mongodb://127.0.0.1:27017/shoppingListDB')
 app.get('/', (req, res) => {
   res.send('Hello, World!');
 });
+
+app.use('/shoppingList', shoppingListRoutes);
+
 
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
