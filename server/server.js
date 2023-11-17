@@ -1,6 +1,20 @@
 import express from 'express';
+import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
 const app = express();
 const port = 3000;
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+
+// parse application/json
+app.use(bodyParser.json())
+
+// Connect to MongoDB
+mongoose.connect('mongodb://127.0.0.1:27017/shoppingListDB')
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.error('MongoDB connection error:', err));
+
 
 app.get('/', (req, res) => {
   res.send('Hello, World!');
