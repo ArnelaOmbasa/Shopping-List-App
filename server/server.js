@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import shoppingListRoutes from './routes/shoppingList.route.js';
 import itemRoutes from './routes/item.route.js';
+import shopperRoutes from './routes/shopper.route.js';
 const app = express();
 const port = 3000;
 
@@ -24,6 +25,7 @@ app.get('/', (req, res) => {
 
 app.use('/shoppingList', shoppingListRoutes);
 app.use('/item', itemRoutes);
+app.use('/shopper', shopperRoutes);
 
 
 app.listen(port, () => {
