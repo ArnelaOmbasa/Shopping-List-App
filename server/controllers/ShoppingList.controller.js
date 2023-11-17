@@ -1,4 +1,6 @@
 import ShoppingList from '../models/ShoppingList.model.js';
+import Shopper from '../models/Shopper.model.js';
+import Item from '../models/Item.model.js';
 
 export const createShoppingList = async (req, res) => {
     try {
@@ -42,7 +44,7 @@ export const createShoppingList = async (req, res) => {
         res.status(201).send(newShoppingList);
       } catch (error) {
         console.error(error);
-        res.status(500).send('Internal Server Error');
+        res.status(500).send('Something went wrong');
       }
 };
 
@@ -66,7 +68,7 @@ export const getShoppingListByShopper = async (req, res) => {
         res.status(200).send(shoppingList);
       } catch (error) {
         console.error(error);
-        res.status(500).send('Internal Server Error');
+        res.status(500).send('Something went wrong');
       }
 };
 

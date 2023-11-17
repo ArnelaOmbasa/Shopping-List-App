@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import shoppingListRoutes from './routes/shoppingList.route.js';
 import itemRoutes from './routes/item.route.js';
 import shopperRoutes from './routes/shopper.route.js';
+
 const app = express();
 const port = 3000;
 
@@ -22,6 +23,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/shoppingListDB')
 app.get('/', (req, res) => {
   res.send('Hello, World!');
 });
+
 
 app.use('/shoppingList', shoppingListRoutes);
 app.use('/item', itemRoutes);

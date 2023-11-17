@@ -4,7 +4,9 @@ import { createShoppingList, getShoppingListByShopper } from '../controllers/Sho
 
 const router = express.Router();
 
+
 router.post('/create', createShoppingList);
+
 router.get('/:shopperId', getShoppingListByShopper);
 
 export default router;
