@@ -1,0 +1,36 @@
+.shopping-list-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  
+  h2 {
+    font-size: 2em;
+    color: #3498db;
+    margin-bottom: 20px;
+  }
+  
+  .shopping-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .shopping-list li {
+    background-color: #ecf0f1;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
+    width: 300px;
+    text-align: center;
+  }
+  
+  .shopping-list li:hover {
+    transform: scale(1.05);
+  }
+  
