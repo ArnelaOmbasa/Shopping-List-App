@@ -30,7 +30,7 @@ const HomePage = () => {
             <Link to="/items">Browse Items</Link>
           </li>
           <li>
-            <Link to="/">Explore Shoppers</Link>
+            <Link to="/shoppers">Explore Shoppers</Link>
           </li>
         </ul>
       </div>

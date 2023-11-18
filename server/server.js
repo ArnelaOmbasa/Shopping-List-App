@@ -4,9 +4,12 @@ import mongoose from 'mongoose';
 import shoppingListRoutes from './routes/shoppingList.route.js';
 import itemRoutes from './routes/item.route.js';
 import shopperRoutes from './routes/shopper.route.js';
+import cors from 'cors';
 
 const app = express();
 const port = 3001;
+
+app.use(cors());
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
