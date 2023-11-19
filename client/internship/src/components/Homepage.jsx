@@ -1,10 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/Homepage.css';
+import { useParams } from 'react-router-dom';
+
+
 
 
 
 const HomePage = () => {
+  const { shopperId } = useParams();
+  console.log(shopperId);
+
   return (
     <div className="homepage-container">
       <h1>Welcome to Shopping Time!</h1>
@@ -17,11 +23,10 @@ const HomePage = () => {
   <h2>Get Started</h2>
   <ul>
     <li>
-      <Link to="/create-list">Create a Shopping List</Link>
+      
+    <Link to="/create-list">Create Shopping List</Link>
     </li>
-    <li>
-      <Link to="/all-lists">View All Shopping Lists</Link>
-    </li>
+    
   </ul>
 </div>
 <div className="explore-section">
