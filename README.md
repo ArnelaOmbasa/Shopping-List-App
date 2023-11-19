@@ -11,43 +11,45 @@
 
    ```bash
    git clone https://github.com/ArnelaOmbasa/Internship-Task.git
-Navigate to the project directory:
 
-```bash
-Copy code
-cd Internship-Task
-Install dependencies:
+2. Navigate to the project directory:
 
-```bash
-Copy code
-npm install
+    ```bash
+        cd Internship-Task
 
-Running the Application
-Backend (Node.js)
-Navigate to the backend directory 
+3. Install dependencies:
 
-```bash
-Copy code
-cd server
-Start the backend server:
+    ```bash
+    npm install
 
-```bash
-Copy code
-npm start
+4. Running the Application
 
-The backend server should now be running on http://localhost:3001.
+    Backend (Node.js)
+    Navigate to the backend directory 
 
-Frontend (React)
-Navigate to the frontend directory:
+    ```bash
+    cd server
 
-```bash
-Copy code
-cd client
-cd internship
-Start the development server:
+5. Start the backend server:
 
-```bash
-Copy code
-npm start
+    ```bash
+    npm start
 
-The React app should now be running on http://localhost:3000.
+    The backend server should now be running on http://localhost:3001.
+
+6. Frontend (React)
+    Navigate to the frontend directory:
+
+    ```bash
+
+    cd client
+
+7.    ```bash
+    cd internship
+
+8. Start the development server:
+
+    ```bash
+    npm start
+
+    The React app should now be running on http://localhost:3000.
