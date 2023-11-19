@@ -35,7 +35,7 @@
     ```bash
     npm start
 
-    The backend server should now be running on http://localhost:3001.
+The backend server should now be running on http://localhost:3001.
 
 6. Frontend (React)
     Navigate to the frontend directory:
@@ -44,7 +44,9 @@
 
     cd client
 
-7.    ```bash
+7.  Navigate to react app
+
+    ```bash
     cd internship
 
 8. Start the development server:
@@ -52,4 +54,4 @@
     ```bash
     npm start
 
-    The React app should now be running on http://localhost:3000.
+The React app should now be running on http://localhost:3000.
