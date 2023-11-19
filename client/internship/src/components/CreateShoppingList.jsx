@@ -1,83 +1,149 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import '../styles/CreateShoppingList.css';
+import Select from 'react-select';
 
-const CreateShoppingList = () => {
-  // State for storing the list of items from the server
+const ShoppingListForm = () => {
+  const [shoppers, setShoppers] = useState([]);
   const [items, setItems] = useState([]);
-  // State for storing selected items for the shopping list
+  const [selectedShopper, setSelectedShopper] = useState('');
   const [selectedItems, setSelectedItems] = useState([]);
-  // State for storing the shopper's name
-  const [shopperName, setShopperName] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
-  // Fetch the list of items from the server when the component mounts
   useEffect(() => {
-    axios.get('http://localhost:3001/item')
-      .then(response => {
-        setItems(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching items:', error);
-      });
+    const fetchShoppersAndItems = async () => {
+      try {
+        const shoppersResponse = await fetch('http://localhost:3001/shopper');
+        const shoppersData = await shoppersResponse.json();
+
+        const itemsResponse = await fetch('http://localhost:3001/item');
+        const itemsData = await itemsResponse.json();
+
+        setShoppers(shoppersData);
+        setItems(itemsData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchShoppersAndItems();
   }, []);
 
-  // Handle selecting or deselecting an item
-  const handleItemSelect = (itemId) => {
-    if (!selectedItems.includes(itemId)) {
-      // Select the item if not already selected
-      setSelectedItems([...selectedItems, itemId]);
+  const handleShopperChange = (selectedOption) => {
+    console.log("Selected Shopper:", selectedOption);
+    setSelectedShopper(selectedOption);
+  };
+  
+  
+  
+
+  const handleItemChange = (selectedOptions) => {
+    console.log("Selected Items:", selectedOptions);
+    const selectedItemsIds = selectedOptions.map((option) => option.value);
+  
+    // Check for undefined items before processing
+    if (selectedItemsIds.includes(undefined)) {
+      setErrorMessage('Please select valid items.');
     } else {
-      // Deselect the item if already selected
-      setSelectedItems(selectedItems.filter((item) => item !== itemId));
+      const itemInListsCount = selectedItemsIds.filter((itemId) => selectedItems.includes(itemId)).length;
+  
+      if (itemInListsCount >= 3) {
+        setErrorMessage('This item is already in the lists of 3 shoppers.');
+      } else {
+        setErrorMessage('');
+        setSelectedItems(selectedItemsIds);
+      }
     }
   };
+  
+  
+  
+  
 
-  // Handle creating the shopping list
-  const handleCreateList = async () => {
+  const handleSubmit = async (event) => {
+    console.log('Submitting with data:', { shopperId: selectedShopper, itemIds: selectedItems });
+
+    event.preventDefault();
+    
+
+  
+    if (!selectedShopper) {
+      setErrorMessage('Please select a shopper.');
+      return;
+    }
+  
+    if (selectedItems.length === 0) {
+      setErrorMessage('Please select at least one item.');
+      return;
+    }
+  
     try {
-      // Perform logic to create a shopping list on the server-side
-      // Send a request to the server with selectedItems and shopperName
-      const createdList = await axios.post('http://localhost:3000/shoppingList/create', {
-        shopperName,
-        items: selectedItems,
+      // Assuming you have an API endpoint to save the shopping list
+      const response = await fetch('http://localhost:3001/shoppingList/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          shopperId: selectedShopper,
+          itemIds: selectedItems,
+        }),
       });
-
-      // Log the created shopping list to the console (for demonstration purposes)
-      console.log('Shopping list created:', createdList.data);
+  
+      if (response.ok) {
+        // Clear the form after successful submission
+        setSelectedShopper('');
+        setSelectedItems([]);
+        setErrorMessage('');
+        console.log('Shopping list saved successfully!');
+      } else {
+        // Handle error scenario
+        console.error('Failed to save shopping list.');
+      }
     } catch (error) {
-      console.error('Error creating shopping list:', error);
+      console.error('Error during submission:', error);
     }
   };
-
+  
   return (
-    <div>
+    <div className="shopping-list-form-container">
       <h2>Create Shopping List</h2>
-      {/* Input for shopper's name */}
-      <label htmlFor="shopperName">Shopper Name:</label>
-      <input
-        type="text"
-        id="shopperName"
-        value={shopperName}
-        onChange={(e) => setShopperName(e.target.value)}
-      />
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Select Shopper:</label>
+          <select
+  className="multi-select-dropdown"
+  value={selectedShopper}
+  onChange={(e) => handleShopperChange(e.target.value)}
+>
+  <option value="">Select a shopper</option>
+  {shoppers.map((shopper) => (
+    <option key={shopper.id} value={shopper.id}>
+      {shopper.name}
+    </option>
+  ))}
+</select>
 
-      {/* List of items for selection */}
-      <p>Select items for your shopping list:</p>
-      <ul>
-        {items.map((item) => (
-          <li
-            key={item._id}
-            onClick={() => handleItemSelect(item._id)}
-            style={{ cursor: 'pointer', textDecoration: selectedItems.includes(item._id) ? 'line-through' : 'none' }}
-          >
-            {item.name}
-          </li>
-        ))}
-      </ul>
 
-      {/* Button to trigger the creation of the shopping list */}
-      <button onClick={handleCreateList}>Create Shopping List</button>
+
+        </div>
+        <div>
+          <label>Select Items:</label>
+          <Select
+  isMulti
+  options={items.map((item) => ({ value: item.id, label: item.name }))}
+  value={selectedItems.map((itemId) => ({ value: itemId, label: items.find((item) => item.id === itemId)?.name || '' }))}
+  onChange={handleItemChange}
+/>
+
+
+        </div>
+
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
+
+        <button type="submit">Save List</button>
+      </form>
     </div>
   );
 };
 
-export default CreateShoppingList;
+export default ShoppingListForm;
